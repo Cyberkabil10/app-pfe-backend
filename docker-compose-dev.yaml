@@ -1,0 +1,75 @@
+version: "3.8"
+
+services:
+  mysqldb:
+    build: ./DB/
+    container_name: mysqldb
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      - MYSQL_ROOT_PASSWORD=$MYSQLDB_ROOT_PASSWORD
+      - MYSQL_DATABASE=$MYSQLDB_DATABASE
+    ports:
+      - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
+    volumes:
+      - db:/var/lib/mysql
+  phpmyadmin:
+    depends_on:
+      - mysqldb
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - '8084:80'
+    environment:
+      PMA_HOST: mysqldb
+  app:
+    depends_on:
+      - mysqldb
+    build: ./covibed_backEnd/
+    container_name: app
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"  }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+  appauth:
+    depends_on:
+      - mysqldb
+    build: ./covibed-Auth/
+    container_name: appauth
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $SPRING_AUTH_LOCAL_PORT:$SPRING_AUTH_DOCKER_PORT
+
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url"  : "jdbc:mysql://mysqldb:$MYSQLDB_DOCKER_PORT/$MYSQLDB_DATABASE?useSSL=false",
+        "spring.datasource.username" : "$MYSQLDB_USER",
+        "spring.datasource.password" : "$MYSQLDB_ROOT_PASSWORD",
+        "spring.jpa.properties.hibernate.dialect" : "org.hibernate.dialect.MySQL5InnoDBDialect"  }'
+    volumes:
+      - .m2:/root/.m2
+    stdin_open: true
+    tty: true
+  appfront:
+    depends_on:
+      - appauth
+      - app
+    build: ./covibedFront/
+    container_name: appfront
+    restart: on-failure
+    env_file: ./.env
+    ports:
+      - $FRONT_LOCAL_PORT:$FRONT_DOCKER_PORT
+volumes:
+  db:
