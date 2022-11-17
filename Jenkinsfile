@@ -14,7 +14,7 @@ pipeline {
         stage ('Build') {
             steps {
 
-                sh './covibed_backEnd/mvn clean install -DskipTests'
+                sh ' mvn clean install -DskipTests'
             }
 
         }
