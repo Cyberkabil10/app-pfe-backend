@@ -13,13 +13,10 @@ pipeline {
 
         stage ('Build') {
             steps {
-                sh 'mvn -Dmaven.test.failure.ignore=true install'
+
+                sh './covibed_backEnd/mvn clean install -DskipTests'
             }
-            post {
-                success {
-                    junit 'target/surefire-reports/**/*.xml'
-                }
-            }
+
         }
     }
 }
