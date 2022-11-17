@@ -3,7 +3,9 @@ pipeline {
     stages {
         stage('Build artifact') {
         steps {
+
             echo "hello world" }
+
         }
         }
     }
