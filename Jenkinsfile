@@ -2,7 +2,9 @@ pipeline {
     agent any
     stages {
         stage('Build artifact') {
-        steps { sh 'mvn clean install -DskipTests' }
+        steps {
+            sh "cd /covibed_backEnd"
+            sh 'mvn clean install -DskipTests' }
         }
         }
     }
