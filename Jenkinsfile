@@ -24,7 +24,7 @@ pipeline {
         }
          stage('test quality with sonarqube covibed_Auth') {
          steps {
-            dir('covibed_Auth'){withMaven { bat "mvn sonar:sonar"}}
+            dir('covibed-Auth'){withMaven { bat "mvn sonar:sonar"}}
 
         }
 
