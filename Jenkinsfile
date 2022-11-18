@@ -33,7 +33,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-              withDockerRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
+              withDockerRegistry(credentialsId: 'ecr:eu-west-3:aws-credentials', toolName: 'docker ', url: 'https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry') {
 
               def customImage = docker.build("my-image:latest")
 
