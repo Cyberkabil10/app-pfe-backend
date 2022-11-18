@@ -29,12 +29,15 @@ pipeline {
         }
 
         }
-        /stage('Build') {
+        stage('Build') {
             steps {
              dir('covibed_backEnd'){
                 script{
-                   
-                  docker.build('demo')
+
+
+              def customImage = docker.build("my-image:latest")
+
+
             }
              }}
         }
