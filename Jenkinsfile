@@ -3,36 +3,28 @@ pipeline {
     stages {
         stage('Build artifact for microservice covibed_backend') {
         steps {
-            dir('covibed_backEnd'){
-                    withMaven { bat "mvn clean install -DskipTests"}
-            }
+            dir('covibed_backEnd'){withMaven { bat "mvn clean install -DskipTests"}}
 
         }
 
         }
          stage('test quality with sonarqube covibed_backend') {
          steps {
-            dir('covibed_backEnd'){
-                    withMaven { bat "mvn sonar:sonar"}
-            }
+            dir('covibed_backEnd'){withMaven { bat "mvn sonar:sonar"}}
 
         }
 
         }
         stage('Build artifact for microservice covibed_Auth') {
         steps {
-            dir('covibed_Auth'){
-                    withMaven { bat "mvn clean install -DskipTests"}
-            }
+            dir('covibed_Auth'){withMaven { bat "mvn clean install -DskipTests"}}
 
         }
 
         }
          stage('test quality with sonarqube covibed_Auth') {
          steps {
-            dir('covibed_Auth'){
-                    withMaven { bat "mvn sonar:sonar"}
-            }
+            dir('covibed_Auth'){withMaven { bat "mvn sonar:sonar"}}
 
         }
 
