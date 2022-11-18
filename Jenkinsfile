@@ -29,10 +29,14 @@ pipeline {
         }
 
         }
-        stage('Build') {
+        /stage('Build') {
             steps {
-             dir('covibed_backEnd'){docker.build('demo')}
-             }
+             dir('covibed_backEnd'){
+                script{
+                   
+                  docker.build('demo')
+            }
+             }}
         }
     }
 }
