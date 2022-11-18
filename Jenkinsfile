@@ -31,17 +31,8 @@ pipeline {
         }
         stage('Build') {
             steps {
-             dir('covibed_backEnd'){
-                script{
-              docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
-
-              def customImage = bat "docker build -t testimagebackend:latest"
-
-        /* Push the container to the custom Registry */
-                customImage.push()
-           }
-            }
-             }}
+             dir('covibed_backEnd'){docker.build('demo')}
+             }
         }
     }
 }
