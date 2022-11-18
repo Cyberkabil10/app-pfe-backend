@@ -33,16 +33,12 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-              withDockerRegistry(credentialsId: 'ecr:eu-west-3:aws-credentials', toolName: 'docker ', url: 'https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry') {
+                    bat "aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry"
 
-              def customImage = bat " docker build -t imagetest:1.0 ."
-
-        /* Push the container to the custom Registry */
-                customImage.push()
-           }
             }
              }}
         }
+
     }
 }
 
