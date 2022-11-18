@@ -5,7 +5,7 @@ pipeline {
         steps {
 
             dir('covibed_backEnd'){
-                bat "mvn clean install -DskipTestst"
+                bat "mvn clean install -DskipTests"
             }
 
             }
