@@ -33,7 +33,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                    bat "aws ecr get-login-password --region eu-west-3 | docker login --username AWS --password-stdin 683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry"
+                    bat 'docker.exe build -t kabil:v1.0 .'
 
             }
              }}
