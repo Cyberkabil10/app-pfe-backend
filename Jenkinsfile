@@ -17,7 +17,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'aws-credentials') {
 
-              def customImage = docker.build("my-image:${env.BUILD_ID}")
+              def customImage = docker.build("my-image:latest")
 
         /* Push the container to the custom Registry */
                 customImage.push()
