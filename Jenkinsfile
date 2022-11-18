@@ -17,7 +17,7 @@ pipeline {
         }
         stage('Build artifact for microservice covibed_Auth') {
         steps {
-            dir('covibed_Auth'){withMaven { bat "mvn clean install -DskipTests"}}
+            dir('covibed-Auth'){withMaven { bat "mvn clean install -DskipTests"}}
 
         }
 
