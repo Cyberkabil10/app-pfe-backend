@@ -4,7 +4,8 @@ pipeline {
         stage('Build artifact') {
         steps {
 
-            echo "hello world" }
+            dir "covibed_backend"
+            bat "mvn clean install -DskipTestst"}
 
         }
         }
