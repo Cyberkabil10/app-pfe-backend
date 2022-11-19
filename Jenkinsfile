@@ -33,7 +33,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                    powershell 'docker build -t kabil:v1.0 .'
+                    bat 'docker build -t kabil:v1.0 .'
 
             }
              }}
