@@ -32,11 +32,13 @@ pipeline {
         stage('Build') {
             steps {
              dir('covibed_backEnd'){
+                def cmd_exec(command) {
+                        return bat(returnStdout: true, script: "${command}").trim()
+                              }
                 script{
-                def IMAGE_TAG= bat ( script:"git log -n 1 --pretty=format:'%h'",
-                returnStdout: true).trim()
+                def IMAGE_TAG= cmd_exec("git log -n 1 --pretty=format:'%h'")
                 bat "echo ${IMAGE_TAG}"
-                bat "docker build -t pfe_container_registry:v${BUILD_NUMBER} ."
+                bat "docker build -t pfe_container_registry:v${IMAGE_TAG} ."
              /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
@@ -50,6 +52,9 @@ pipeline {
         }
     }
 }
+
+
+
 
 
 
