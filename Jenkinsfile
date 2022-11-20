@@ -33,7 +33,8 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                def imagetag= bat "git log -1 --pretty=%h"
+                def imagetag= bat ( script:"git log -1 --pretty=%h",
+                returnStdout: true).trim()
                 bat "echo ${imagetag}"
                 bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
              /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
@@ -49,4 +50,6 @@ pipeline {
         }
     }
 }
+
+
 
