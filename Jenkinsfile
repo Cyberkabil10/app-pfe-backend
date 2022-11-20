@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Build artifact for microservice covibed_backend') {
         steps {
@@ -30,17 +29,19 @@ pipeline {
         }
 
         }
-
         stage('Build') {
             steps {
              dir('covibed_backEnd'){
                 script{
-                          def cmd_exec(command) {
-        return bat(returnStdout: true, script: "${command}").trim()
-                    }
-                def IMAGE_TAG= cmd_exec("git log -n 1 --pretty=format:'%h'")
-                bat "echo ${IMAGE_TAG}"
-                bat "docker build -t pfe_container_registry:v${IMAGE_TAG} ."
+                    def props = readProperties file: 'gitversion.properties'
+
+                     env.GitVersion_SemVer = props.GitVersion_SemVer
+                     env.GitVersion_BranchName = props.GitVersion_BranchName
+                     env.GitVersion_AssemblySemVer = props.GitVersion_AssemblySemVer
+                     env.GitVersion_MajorMinorPatch = props.GitVersion_MajorMinorPatch
+                     env.GitVersion_Sha = props.GitVersion_Sha
+
+                bat "docker build -t pfe_container_registry: ${env.GitVersion_SemVer} ."
              /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
@@ -53,11 +54,8 @@ pipeline {
              }}
         }
     }
+}
+script {
 
 }
-
-
-
-
-
 
