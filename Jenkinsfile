@@ -1,8 +1,6 @@
 pipeline {
     agent any
-     def cmd_exec(command) {
-        return bat(returnStdout: true, script: "${command}").trim()
-                    }
+
     stages {
         stage('Build artifact for microservice covibed_backend') {
         steps {
@@ -36,7 +34,6 @@ pipeline {
         stage('Build') {
             steps {
              dir('covibed_backEnd'){
-
                 script{
                 def IMAGE_TAG= cmd_exec("git log -n 1 --pretty=format:'%h'")
                 bat "echo ${IMAGE_TAG}"
@@ -53,6 +50,9 @@ pipeline {
              }}
         }
     }
+         def cmd_exec(command) {
+        return bat(returnStdout: true, script: "${command}").trim()
+                    }
 }
 
 
