@@ -33,7 +33,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                d//ef imagetag= bat ( script:"git log -n 1 --pretty=format:'%H",
+                //ef imagetag= bat ( script:"git log -n 1 --pretty=format:'%H",
                 //returnStdout: true).trim()
 
                 bat "docker build -t pfe_container_registry:${GIT_COMMIT} ."
