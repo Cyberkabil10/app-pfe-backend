@@ -34,13 +34,13 @@ pipeline {
              dir('covibed_backEnd'){
                 script{
 
-              docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
+              //docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
-              def customImage = docker.build("pfe_container_registry")
+              def customImage = docker.build("pfe_container_registry:${BUILD_NUMBER} ")
 
         /* Push the container to the custom Registry */
-                customImage.push('latest')
+                //customImage.push('latest')
            }
             }
              }}
