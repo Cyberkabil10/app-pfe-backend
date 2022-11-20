@@ -29,12 +29,13 @@ pipeline {
         }
 
         }
+                        def cmd_exec(command) {
+                        return bat(returnStdout: true, script: "${command}").trim()
+                              }
         stage('Build') {
             steps {
              dir('covibed_backEnd'){
-                def cmd_exec(command) {
-                        return bat(returnStdout: true, script: "${command}").trim()
-                              }
+
                 script{
                 def IMAGE_TAG= cmd_exec("git log -n 1 --pretty=format:'%h'")
                 bat "echo ${IMAGE_TAG}"
