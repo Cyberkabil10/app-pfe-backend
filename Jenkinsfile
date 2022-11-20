@@ -35,6 +35,9 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
+                          def cmd_exec(command) {
+        return bat(returnStdout: true, script: "${command}").trim()
+                    }
                 def IMAGE_TAG= cmd_exec("git log -n 1 --pretty=format:'%h'")
                 bat "echo ${IMAGE_TAG}"
                 bat "docker build -t pfe_container_registry:v${IMAGE_TAG} ."
@@ -50,9 +53,7 @@ pipeline {
              }}
         }
     }
-         def cmd_exec(command) {
-        return bat(returnStdout: true, script: "${command}").trim()
-                    }
+
 }
 
 
