@@ -1,5 +1,8 @@
 pipeline {
     agent any
+     def cmd_exec(command) {
+        return bat(returnStdout: true, script: "${command}").trim()
+                    }
     stages {
         stage('Build artifact for microservice covibed_backend') {
         steps {
@@ -29,9 +32,7 @@ pipeline {
         }
 
         }
-                        def cmd_exec(command) {
-                        return bat(returnStdout: true, script: "${command}").trim()
-                              }
+
         stage('Build') {
             steps {
              dir('covibed_backEnd'){
