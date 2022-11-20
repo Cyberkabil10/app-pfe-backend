@@ -34,7 +34,7 @@ pipeline {
              dir('covibed_backEnd'){
                 script{
                 def imagetag= bat ( script:"git rev-parse HEAD",
-                returnStdout: true).trim()
+                returnStdout: true)
                 bat "docker build -t pfe_container_registry:${imagetag} ."
              /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
