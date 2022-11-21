@@ -33,18 +33,17 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                def VERSION=$(date %Y%m%d%H%M%S).git.$GIT_REVISION
-                //def imagetag= bat "git log -1 --pretty=%h"
-                bat "echo ${VERSION}"
+               // def imagetag= bat "git log -1 --pretty=%h"
+                //bat "echo ${imagetag}"
                 //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
-             /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
+             docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
-              def customImage = docker.build("pfe_container_registry:${BUILD_NUMBER} ")
+              def customImage = docker.build("pfe_container_registry:1.0.${BUILD_NUMBER} ")
 
 
-                customImage.push('latest')
-           }*/
+                //customImage.push('latest')
+           }
             }
              }}
         }
