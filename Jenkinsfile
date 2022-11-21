@@ -40,7 +40,7 @@ pipeline {
              docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
-              def customImage = docker.build("pfe_container_registry:'v1.0'+'${env.BUILD_NUMBER}'")
+              def customImage = docker.build("pfe_container_registry:''+v1.0+''+${env.BUILD_NUMBER}")
 
 
                 //customImage.push('latest')
