@@ -33,15 +33,10 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                    def props = readProperties file: 'gitversion.properties'
-
-                     env.GitVersion_SemVer = props.GitVersion_SemVer
-                     env.GitVersion_BranchName = props.GitVersion_BranchName
-                     env.GitVersion_AssemblySemVer = props.GitVersion_AssemblySemVer
-                     env.GitVersion_MajorMinorPatch = props.GitVersion_MajorMinorPatch
-                     env.GitVersion_Sha = props.GitVersion_Sha
-
-                bat "docker build -t pfe_container_registry: ${env.GitVersion_SemVer} ."
+                def VERSION=$(date %Y%m%d%H%M%S).git.$GIT_REVISION
+                //def imagetag= bat "git log -1 --pretty=%h"
+                bat "echo ${VERSION}"
+                //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
              /* docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
@@ -54,8 +49,5 @@ pipeline {
              }}
         }
     }
-}
-script {
-
 }
 
