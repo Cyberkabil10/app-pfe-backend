@@ -33,13 +33,14 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
+                    def TAG = ${BUILD_NUMBER}
                // def imagetag= bat "git log -1 --pretty=%h"
                 //bat "echo ${imagetag}"
                 //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
              docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
 
-              def customImage = docker.build("pfe_container_registry:${BUILD_NUMBER} ")
+              def customImage = docker.build("pfe_container_registry:$TAG")
 
 
                 //customImage.push('latest')
