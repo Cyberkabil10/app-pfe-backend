@@ -33,7 +33,7 @@ pipeline {
             steps {
              dir('covibed_backEnd'){
                 script{
-                    def INSTANCE_NAME = "v1.0-${env.CLUSTER_NAME}"
+                def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
                 //def imagetag= bat "cat Version.txt"
                 //bat "echo ${imagetag}"
                 //bat "echo ${imagetag}"
