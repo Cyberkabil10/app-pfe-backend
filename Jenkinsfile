@@ -45,22 +45,7 @@ pipeline {
             }
              }}
         }
-        stage('Build backend') {
-            steps {
-             dir('covibed_backEnd'){
-                script{
-                def IMAGE_NAME = "backend-v1.0-${env.BUILD_NUMBER}"
-                //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
-             docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
 
-
-              def backendImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry")
-                backendImage.push("${IMAGE_NAME}")
-                backendImage.push("latest")
-           }
-            }
-             }}
-        }
 
     }
 }
