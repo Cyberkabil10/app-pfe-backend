@@ -33,19 +33,34 @@ pipeline {
             steps {
              dir('covibed-Auth'){
                 script{
-                def INSTANCE_NAME = "backend-auth-v1.0-${env.BUILD_NUMBER}"
+                def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
                 //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
-             docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry', 'ecr:eu-west-3:aws-credentials') {
+             docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo', 'ecr:eu-west-3:aws-credentials') {
 
 
-              def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/pfe_container_registry")
+              def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo")
                 customImage.push("${INSTANCE_NAME}")
                 customImage.push("latest")
            }
             }
              }}
         }
+        stage('Build backend') {
+            steps {
+             dir('covibed_backEnd'){
+                script{
+                def IMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
+                //bat "docker build -t pfe_container_registry:${BUILD_NUMBER}-${imagetag} ."
+             docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo', 'ecr:eu-west-3:aws-credentials') {
 
+
+              def backendImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo")
+                backendImage.push("${IMAGE_NAME}")
+                backendImage.push("latest")
+           }
+            }
+             }}
+        }
 
     }
 }
