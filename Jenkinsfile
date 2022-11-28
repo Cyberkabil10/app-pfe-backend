@@ -29,7 +29,7 @@ pipeline {
         }
 
         }
-        stage('Build backend auth') {
+        /*stage('Build backend auth') {
             steps {
              dir('covibed-Auth'){
                 script{
@@ -54,7 +54,7 @@ pipeline {
            }
             }
              }}
-        }
+        }*/
         stage('Build dataBase Image') {
             steps {
              dir('DB'){
