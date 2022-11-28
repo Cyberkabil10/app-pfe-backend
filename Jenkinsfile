@@ -33,8 +33,8 @@ pipeline {
             steps {
              dir('covibed-Auth'){
                 script{
-                    bat "echo ${env.AWS_REGISTRY_URL}"/
-                        "echo ${env.AWS_REGION}"
+                    bat "echo ${env.AWS_REGION}"
+
 
 
 
