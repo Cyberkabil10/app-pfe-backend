@@ -33,8 +33,11 @@ pipeline {
             steps {
              dir('covibed-Auth'){
                 script{
+                def props = readProperties file: 'extravars.properties'
+                env.AWS_REGISTRY_URL = props.AWS_REGISTRY_URL
+                env.AWS_REGION=props.AWS_REGION
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
-                docker.withRegistry('${env.AWS_REGISTRY_URL}/backendauth-repo', 'ecr:eu-west-3:aws-credentials') {
+                docker.withRegistry('${AWS_REGISTRY_URL}/backendauth-repo', '${AWS_REGION}:aws-credentials') {
                 //def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo")
                 //customImage.push("${INSTANCE_NAME}")
                 //customImage.push("latest")
