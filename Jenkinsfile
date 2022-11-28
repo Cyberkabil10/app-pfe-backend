@@ -26,10 +26,23 @@ pipeline {
          steps {
             dir('covibed-Auth'){withMaven { bat "mvn sonar:sonar"}}
 
+        }}
+        stage('Build dataBase Image') {
+            steps {
+             dir('DB'){
+                script{
+                def DBIMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
+                docker.withRegistry("${env.AWS_REGISTRY_URL}/database-repo", "ecr:eu-west-3:aws-credentials") {
+                def dbImage = docker.build("${env.AWS_REPO_NAME}/database-repo")
+                dbImage.push("${DBIMAGE_NAME}")
+                dbImage.push("latest")
+           }
+            }
+             }}
         }
 
-        }
-        /*stage('Build backend auth') {
+
+        stage('Build backend auth') {
             steps {
              dir('covibed-Auth'){
                 script{
@@ -51,19 +64,6 @@ pipeline {
                 def backendImage = docker.build("${env.AWS_REPO_NAME}/backend-repo")
                 backendImage.push("${IMAGE_NAME}")
                 backendImage.push("latest")
-           }
-            }
-             }}
-        }*/
-        stage('Build dataBase Image') {
-            steps {
-             dir('DB'){
-                script{
-                def DBIMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
-                docker.withRegistry("${env.AWS_REGISTRY_URL}/database-repo", "ecr:eu-west-3:aws-credentials") {
-                def dbImage = docker.build("${env.AWS_REPO_NAME}/database-repo")
-                dbImage.push("${DBIMAGE_NAME}")
-                dbImage.push("latest")
            }
             }
              }}
