@@ -33,7 +33,11 @@ pipeline {
             steps {
              dir('covibed-Auth'){
                 script{
-                    bat "echo ${env.AWS_REGISTRY_URL}"
+                    bat "echo ${env.AWS_REGISTRY_URL}"/
+                        "echo ${env.AWS_REGION}"
+
+
+
                 /*def props = readProperties file: '/C/Users/user/Desktop/pfeApp/extravars.properties'
                 env.AWS_REGISTRY_URL = props.AWS_REGISTRY_URL
                 env.AWS_REGION=props.AWS_REGION
