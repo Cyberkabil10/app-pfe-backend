@@ -38,7 +38,7 @@ pipeline {
                 script{
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
                 docker.withRegistry("'${env.AWS_REGISTRY_URL}'/backendauth-repo", "ecr:eu-west-3:aws-credentials") {
-                def customImage = docker.build("${env.AWS_REPO_NAME}/backendauth-repo")
+                def customImage = docker.build("'${env.AWS_REPO_NAME}'/backendauth-repo")
                 customImage.push("${INSTANCE_NAME}")
                 customImage.push("latest")
            }
@@ -50,8 +50,8 @@ pipeline {
              dir('covibed_backEnd'){
                 script{
                 def IMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
-                docker.withRegistry('${env.AWS_REGISTRY_URL}/backend-repo', 'ecr:eu-west-3:aws-credentials') {
-                def backendImage = docker.build("${env.AWS_REPO_NAME}/backend-repo")
+                docker.withRegistry("'${env.AWS_REGISTRY_URL}'/backend-repo", "ecr:eu-west-3:aws-credentials") {
+                def backendImage = docker.build("'${env.AWS_REPO_NAME}'/backend-repo")
                 backendImage.push("${IMAGE_NAME}")
                 backendImage.push("latest")
            }
