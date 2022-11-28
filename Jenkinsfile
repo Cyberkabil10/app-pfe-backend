@@ -33,7 +33,8 @@ pipeline {
             steps {
              dir('covibed-Auth'){
                 script{
-                def props = readProperties file: '/c/Users/user/Desktop/pfeApp/extravars.properties'
+                //def pomPath = findFiles(glob: "**/extravars.properties")[0].path
+                def props = readProperties file: findFiles(glob: "**/extravars.properties")[0].path
                 env.AWS_REGISTRY_URL = props.AWS_REGISTRY_URL
                 env.AWS_REGION=props.AWS_REGION
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
