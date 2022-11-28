@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment{
+        repo_name = '683929775058.dkr.ecr.eu-west-3.amazonaws.com'
+    }
     stages {
         stage('Build artifact for microservice covibed_backend') {
         steps {
@@ -29,36 +32,39 @@ pipeline {
         }
 
         }
-        stage('Build backend auth') {
+       /* stage('Build backend auth') {
             steps {
              dir('covibed-Auth'){
                 script{
-                //def props = readProperties file: '/C/Users/user/Desktop/pfeApp/extravars.properties'
-                //env.AWS_REGISTRY_URL = props.AWS_REGISTRY_URL
-                //env.AWS_REGION=props.AWS_REGION
-                //def region= ${env.AWS_REGION}
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
                 docker.withRegistry("'${env.AWS_REGISTRY_URL}'/backendauth-repo", "ecr:eu-west-3:aws-credentials") {
-                //def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo")
-                //customImage.push("${INSTANCE_NAME}")
-                //customImage.push("latest")
+                def customImage = docker.build("${repo_name}/backendauth-repo")
+                customImage.push("${INSTANCE_NAME}")
+                customImage.push("latest")
            }
             }
              }}
         }
-        /*stage('Build backend') {
+        stage('Build backend') {
             steps {
              dir('covibed_backEnd'){
                 script{
                 def IMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
-                docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo', 'ecr:eu-west-3:aws-credentials') {
-                def backendImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo")
+                docker.withRegistry('${env.AWS_REGISTRY_URL}/backend-repo', 'ecr:eu-west-3:aws-credentials') {
+                def backendImage = docker.build("${repo_name}/backend-repo")
                 backendImage.push("${IMAGE_NAME}")
                 backendImage.push("latest")
            }
             }
              }}
         }*/
+        stage('email notifiication'){
+          steps {
+          emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+          recipientProviders: [[$class: 'DevelopersRecipientProvider'], [$class: 'RequesterRecipientProvider']],
+          subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+               }
+        }
 
     }
 }
