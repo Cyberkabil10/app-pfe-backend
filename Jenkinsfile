@@ -34,15 +34,15 @@ pipeline {
              dir('covibed-Auth'){
                 script{
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
-                docker.withRegistry('https://683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo', 'ecr:eu-west-3:aws-credentials') {
-                def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo")
-                customImage.push("${INSTANCE_NAME}")
-                customImage.push("latest")
+                docker.withRegistry('${env.AWS_REGISTRY_URL}/backendauth-repo', '${env.AWS_REGION}:aws-credentials') {
+                //def customImage = docker.build("683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo")
+                //customImage.push("${INSTANCE_NAME}")
+                //customImage.push("latest")
            }
             }
              }}
         }
-        stage('Build backend') {
+        /*stage('Build backend') {
             steps {
              dir('covibed_backEnd'){
                 script{
@@ -54,7 +54,7 @@ pipeline {
            }
             }
              }}
-        }
+        }*/
 
     }
 }
