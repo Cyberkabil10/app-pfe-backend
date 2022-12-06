@@ -27,7 +27,7 @@ pipeline {
             dir('covibed-Auth'){withMaven { bat "mvn sonar:sonar"}}
 
         }}
-        stage('Build dataBase Image') {
+        /*stage('Build dataBase Image') {
             steps {
              dir('DB'){
                 script{
@@ -40,7 +40,7 @@ pipeline {
            }
             }
              }}
-        }
+        }*/
 
 
         stage('Build backend auth') {
