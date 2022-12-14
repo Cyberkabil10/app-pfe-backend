@@ -39,7 +39,7 @@ import com.allodoc.tn.covibed.tools.UserBody;
 import com.allodoc.tn.covibed.tools.UserInfo;
 
 @CrossOrigin("*")
-//@RequestMapping("api/")
+@RequestMapping("/api")
 @RestController
 public class MainController {
 
