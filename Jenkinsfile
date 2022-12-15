@@ -27,21 +27,6 @@ pipeline {
             dir('covibed-Auth'){withMaven { bat "mvn sonar:sonar"}}
 
         }}
-        stage('Build dataBase Image') {
-            steps {
-             dir('DB'){
-                script{
-                def DBIMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
-                docker.withRegistry("${env.AWS_REGISTRY_URL}/database-repo", "ecr:eu-west-3:aws-credentials") {
-                def dbImage = docker.build("${env.AWS_REPO_NAME}/database-repo")
-                dbImage.push("latest")
-                dbImage.push("${DBIMAGE_NAME}")
-
-           }
-            }
-             }}
-        }
-
 
         stage('Build backend auth') {
             steps {
