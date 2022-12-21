@@ -35,7 +35,7 @@ pipeline {
                 def INSTANCE_NAME = "v1.0-${env.BUILD_NUMBER}"
                 docker.withRegistry("${env.AWS_REGISTRY_URL}/backendauth-repo", "ecr:eu-west-3:aws-credentials") {
                 def customImage = docker.build("${env.AWS_REPO_NAME}/backendauth-repo")
-                customImage.push("latest")
+                //customImage.push("latest")
                 customImage.push("${INSTANCE_NAME}")
 
            }
@@ -49,7 +49,7 @@ pipeline {
                 def IMAGE_NAME = "v1.0.${env.BUILD_NUMBER}"
                 docker.withRegistry("${env.AWS_REGISTRY_URL}/backend-repo", "ecr:eu-west-3:aws-credentials") {
                 def backendImage = docker.build("${env.AWS_REPO_NAME}/backend-repo")
-                backendImage.push("latest")
+                //backendImage.push("latest")
                 backendImage.push("${IMAGE_NAME}")
 
            }
