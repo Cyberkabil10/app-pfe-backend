@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend-auth-service
+  namespace: pfe
+spec:
+  selector:
+    app: springboot-k8s-backend-auth
+    #tier: backend
+  ports:
+    - protocol: TCP
+      port: 9100
+      targetPort: 9100
+  type: ClusterIP

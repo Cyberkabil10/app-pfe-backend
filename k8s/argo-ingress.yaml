@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/instance: argocd
+  name: ingress-argo
+  namespace: argocd
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: argocd.kabil-aws-pfe.com
+    http:
+      paths:
+        - pathType: Prefix
+          backend:
+            service:
+              name: argocd-server
+              port:
+                name: https
+          path: /
+  tls:
+  - hosts:
+    - argocd.kabil-aws-pfe.com
+    secretName: argocd-secret
+
+
+
+
+
