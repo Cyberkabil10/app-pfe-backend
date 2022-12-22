@@ -47,4 +47,4 @@ spec:
   tls:
   - hosts:
     - kabil-aws-pfe.com
-    secretName: laugh-tale-secret
+    secretName: laugh-tale-secret-one-piece
