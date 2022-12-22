@@ -1,0 +1,64 @@
+# Configure 'StatefulSet' of mysql server
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysqldb
+  namespace: pfe
+  labels:
+    app: mysqldb
+    tier: database
+spec:
+  selector: # mysql Pod Should contain same labels # has to match .spec.template.metadata.labels
+    matchLabels:
+      app: mysqldb
+      tier: database
+  serviceName: "mysql-svc"
+  #strategy:
+  # type: Recreate
+  template:
+    metadata:
+      labels: # Must match 'Service' and 'Deployment' selectors
+        app: mysqldb
+        tier: database
+    spec:
+      containers:
+      - image: mysql:5.7
+        name: mysqldb
+        args:
+          - "--ignore-db-dir=lost+found" # Workaround for https://github.com/docker-library/mysql/issues/186
+        env:
+        - name: MYSQL_ROOT_PASSWORD # Setting Root Password of mysql From a 'Secret'
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret # Name of the 'Secret'
+              key: MYSQL_ROOT_PASSWORD   # 'key' inside the Secret which contains required 'value'
+        - name: MYSQL_USER # Setting USER username on mysql From a 'Secret'
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: MYSQL_USER
+        - name: MYSQL_PASSWORD # Setting USER username on mysql From a 'Secret'
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: MYSQL_PASSWORD
+        - name: MYSQL_DATABASE # Setting Database Name from a 'secret'
+          valueFrom:
+            secretKeyRef:
+              name: backend-secret
+              key: MYSQL_DATABASE
+        ports:
+        - containerPort: 3306
+          name: mysqldb
+        volumeMounts:        # Mounting volume obtained from Persistent Volume Claim
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql #This is the path in the container on which the mounting will take place.
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
+      volumes:
+      - name: mysql-persistent-storage # Obtaining 'volume' from PVC
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
+      - name: init-script
+        configMap:
+          name: mysql-initdb-config
