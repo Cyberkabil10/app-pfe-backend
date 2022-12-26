@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-backend-auth
-          image: 683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo:v1.0-159
+          image: 683929775058.dkr.ecr.eu-west-3.amazonaws.com/backendauth-repo:v1.0-160
           ports:
             - containerPort: 9100
               protocol: TCP
