@@ -56,6 +56,22 @@ pipeline {
             }
              }}
         }
+          stage('configure cluster issuer ') {
+            steps {
+                dir('k8s'){
+                    bat "kubectl apply -f ssl-tls-cluster-issuer.yaml"
+            // One or more steps need to be included within the steps block.
+            }
+            }
+          }
+          stage('configure argocd for diployment ') {
+            steps {
+                dir('argoconfig'){
+                    bat "kubectl apply -f argo-config.yaml"
+            // One or more steps need to be included within the steps block.
+            }
+            }
+          }
 
         stage('email notification'){
           steps {

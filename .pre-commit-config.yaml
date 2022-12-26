@@ -28,8 +28,4 @@ repos:
           - --safe
           - --quiet
         exclude: ^tests/resources/.*(init_with_license\.py|todo).*$
-  - repo: https://github.com/Lucas-C/pre-commit-hooks-bandit
-    rev: v1.0.6
-    hooks:
-      - id: python-bandit-vulnerability-check
-        args: [--skip, 'B101', --recursive, .]
+
