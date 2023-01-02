@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: front-covibed
-        image: "683929775058.dkr.ecr.eu-west-3.amazonaws.com/front-repo:v1.0.65"
+        image: "683929775058.dkr.ecr.eu-west-3.amazonaws.com/front-repo:v1.0.66"
         ports:
         - containerPort: 90
           protocol: TCP
