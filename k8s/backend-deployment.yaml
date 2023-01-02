@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: springboot-k8s-app
-          image: 683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo:v1.0.162
+          image: 683929775058.dkr.ecr.eu-west-3.amazonaws.com/backend-repo:v1.0.163
           ports:
             - containerPort: 8891
               protocol: TCP
