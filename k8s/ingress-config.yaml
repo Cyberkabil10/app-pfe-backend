@@ -5,18 +5,6 @@ metadata:
   namespace: pfe
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
-    #nginx.ingress.kubernetes.io/use-regex: "true"
-    #nginx.ingress.kubernetes.io/enable-cors: "true"
-    #nginx.ingress.kubernetes.io/cors-allow-headers: ".*"
-    #nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
-    #nginx.ingress.kubernetes.io/cors-allow-origin: ".*"
-    #nginx.ingress.kubernetes.io/cors-allow-methods: "PUT, GET, POST, OPTIONS"
-    #nginx.ingress.kubernetes.io/auth-response-headers: "X-Auth-Request-User, X-Auth-Request-Email, X-Auth-Request-Access-Token"
-    #nginx.ingress.kubernetes.io/auth-request-redirect: "https://kabil-aws-pfe.com/ouath/token"
-    #nginx.ingress.kubernetes.io/configuration-snippet: |
-     # auth_request_set $token $upstream_http_x_auth_request_access_token;
-      #add_header 'Authorization' $token;
-
 spec:
   ingressClassName: nginx
   rules:
